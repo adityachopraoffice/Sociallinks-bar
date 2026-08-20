@@ -50,10 +50,12 @@ export const action = async ({ request }) => {
 
   const shopifyPlan = plan === "basic" ? PLAN_BASIC : PLAN_PRO;
   
+  const shopName = session.shop.split(".")[0];
+  
   await billing.request({
     plan: shopifyPlan,
     isTest: true,
-    returnUrl: `${process.env.SHOPIFY_APP_URL || process.env.HOST}/app/billing`,
+    returnUrl: `https://admin.shopify.com/store/${shopName}/apps/${process.env.SHOPIFY_API_KEY}/app/billing`,
   });
 
   return null;
