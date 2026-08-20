@@ -53,7 +53,7 @@ export const action = async ({ request }) => {
   await billing.request({
     plan: shopifyPlan,
     isTest: true,
-    returnUrl: `https://${process.env.HOST}/app/billing`,
+    returnUrl: `${process.env.SHOPIFY_APP_URL || process.env.HOST}/app/billing`,
   });
 
   return null;
