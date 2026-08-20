@@ -41,6 +41,19 @@ export const action = async ({ request }) => {
   const plan = formData.get("plan");
 
   if (plan === "free") {
+    const billingCheck = await billing.check({
+      plans: [PLAN_BASIC, PLAN_PRO],
+      isTest: true,
+    });
+    
+    if (billingCheck.hasActivePayment && billingCheck.appSubscriptions.length > 0) {
+      await billing.cancel({
+        subscriptionId: billingCheck.appSubscriptions[0].id,
+        isTest: true,
+        prorate: true,
+      });
+    }
+
     await prisma.shopSettings.update({
       where: { shop: session.shop },
       data: { currentPlan: "free" },
