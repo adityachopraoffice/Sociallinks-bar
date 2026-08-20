@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id                  String    @id
+  shop                String
+  state               String
+  isOnline            Boolean   @default(false)
+  scope               String?
+  expires             DateTime?
+  accessToken         String
+  userId              BigInt?
+  firstName           String?
+  lastName            String?
+  email               String?
+  accountOwner        Boolean   @default(false)
+  locale              String?
+  collaborator        Boolean?  @default(false)
+  emailVerified       Boolean?  @default(false)
+  refreshToken        String?
+  refreshTokenExpires DateTime?
+}
+
+model ShopSettings {
+  id                Int     @id @default(autoincrement())
+  shop              String  @unique
+  selectedTemplate  String  @default("minimal")
+  position          String  @default("right")
+  bgColor           String  @default("#FFFFFF")
+  iconColor         String  @default("#000000")
+  iconSize          String  @default("24px")
+  currentPlan       String  @default("free")
+  facebookUrl       String  @default("")
+  instagramUrl      String  @default("")
+  twitterUrl        String  @default("")
+  youtubeUrl        String  @default("")
+  tiktokUrl         String  @default("")
+  pinterestUrl      String  @default("")
+  linkedinUrl       String  @default("")
+  whatsappUrl       String  @default("")
+  facebookEnabled   Boolean @default(false)
+  instagramEnabled  Boolean @default(false)
+  twitterEnabled    Boolean @default(false)
+  youtubeEnabled    Boolean @default(false)
+  tiktokEnabled     Boolean @default(false)
+  pinterestEnabled  Boolean @default(false)
+  linkedinEnabled   Boolean @default(false)
+  whatsappEnabled   Boolean @default(false)
+}
