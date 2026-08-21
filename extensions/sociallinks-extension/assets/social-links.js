@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
         style.id = styleId;
         style.innerHTML = `
           .sociallinks-bar-wrapper {
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -47,7 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
             z-index: 999999;
           }
           .sociallinks-bar-wrapper:hover {
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+            transform: translateY(-3px) scale(1.02);
+            filter: brightness(1.05);
           }
           .sociallinks-bar-wrapper a {
             transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, filter 0.25s ease;
@@ -70,32 +70,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Template styles
       let template = settings.selectedTemplate || "minimal";
-      let baseStyles = "gap: 12px;";
+      let baseStyles = "gap: 14px;";
 
-      let background = "rgba(255, 255, 255, 0.9)";
-      let border = "1px solid rgba(224, 224, 224, 0.5)";
+      let background = "rgba(255, 255, 255, 0.95)";
+      let border = "1px solid #eaeaea";
       let color = "#333333";
-      let borderRadius = "12px";
-      let padding = "10px 14px";
+      let borderRadius = "8px";
+      let padding = "8px 14px";
+      let boxShadow = "0 2px 10px rgba(0,0,0,0.05)";
 
       if (template === "bold") {
-        background = "rgba(26, 26, 26, 0.95)";
-        border = "1px solid rgba(255, 255, 255, 0.1)";
-        color = "#FF4444";
-        borderRadius = "12px";
-        padding = "12px 16px";
-      } else if (template === "elegant") {
-        background = "rgba(253, 246, 240, 0.95)";
-        border = "1px solid rgba(232, 213, 196, 0.8)";
-        color = "#A87B4F";
-        borderRadius = "30px";
-        padding = "10px 18px";
-      } else if (template === "dark") {
-        background = "rgba(13, 13, 13, 0.9)";
-        border = "1px solid rgba(0, 255, 136, 0.3)";
-        color = "#00FF88";
+        background = "linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%)";
+        border = "none";
+        color = "#FFFFFF";
         borderRadius = "16px";
-        padding = "10px 14px";
+        padding = "12px 18px";
+        boxShadow = "0 8px 20px rgba(255, 75, 43, 0.4)";
+      } else if (template === "elegant") {
+        background = "#fdfbf7";
+        border = "1px solid #d4af37";
+        color = "#d4af37";
+        borderRadius = "50px";
+        padding = "10px 24px";
+        boxShadow = "0 10px 25px rgba(212, 175, 55, 0.15)";
+      } else if (template === "dark") {
+        background = "#111111";
+        border = "1px solid #00ffcc";
+        color = "#00ffcc";
+        borderRadius = "4px";
+        padding = "10px 16px";
+        boxShadow = "0 0 15px rgba(0, 255, 204, 0.3)";
       }
 
       if (settings.currentPlan === "pro") {
@@ -113,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         posStyles = "position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); flex-direction: row;";
       }
 
-      bar.style.cssText = `${baseStyles} background: ${background}; border: ${border}; border-radius: ${borderRadius}; padding: ${padding}; ${posStyles}`;
+      bar.style.cssText = `${baseStyles} background: ${background}; border: ${border}; border-radius: ${borderRadius}; padding: ${padding}; box-shadow: ${boxShadow}; ${posStyles}`;
 
       enabledLinks.forEach((p) => {
         const a = document.createElement("a");

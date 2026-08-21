@@ -116,21 +116,21 @@ export default function SettingsPage() {
   const getTemplateStyles = (templateId) => {
     let base = {
       display: "flex",
-      gap: "12px",
+      gap: "14px",
       alignItems: "center",
       justifyContent: "center",
     };
     if (templateId === "minimal") {
-      return { ...base, background: "rgba(255, 255, 255, 0.9)", border: "1px solid rgba(224, 224, 224, 0.5)", color: "#333333", borderRadius: "12px", padding: "10px 14px" };
+      return { ...base, background: "rgba(255, 255, 255, 0.95)", border: "1px solid #eaeaea", color: "#333333", borderRadius: "8px", padding: "8px 14px", boxShadow: "0 2px 10px rgba(0,0,0,0.05)" };
     }
     if (templateId === "bold") {
-      return { ...base, background: "rgba(26, 26, 26, 0.95)", border: "1px solid rgba(255, 255, 255, 0.1)", color: "#FF4444", borderRadius: "12px", padding: "12px 16px" };
+      return { ...base, background: "linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%)", border: "none", color: "#FFFFFF", borderRadius: "16px", padding: "12px 18px", boxShadow: "0 8px 20px rgba(255, 75, 43, 0.4)" };
     }
     if (templateId === "elegant") {
-      return { ...base, background: "rgba(253, 246, 240, 0.95)", border: "1px solid rgba(232, 213, 196, 0.8)", color: "#A87B4F", borderRadius: "30px", padding: "10px 18px" };
+      return { ...base, background: "#fdfbf7", border: "1px solid #d4af37", color: "#d4af37", borderRadius: "50px", padding: "10px 24px", boxShadow: "0 10px 25px rgba(212, 175, 55, 0.15)" };
     }
     if (templateId === "dark") {
-      return { ...base, background: "rgba(13, 13, 13, 0.9)", border: "1px solid rgba(0, 255, 136, 0.3)", color: "#00FF88", borderRadius: "16px", padding: "10px 14px" };
+      return { ...base, background: "#111111", border: "1px solid #00ffcc", color: "#00ffcc", borderRadius: "4px", padding: "10px 16px", boxShadow: "0 0 15px rgba(0, 255, 204, 0.3)" };
     }
     return base;
   };
@@ -269,14 +269,14 @@ export default function SettingsPage() {
                 
                 <style dangerouslySetInnerHTML={{__html: `
                   .sociallinks-bar-wrapper {
-                    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
                     backdrop-filter: blur(12px);
                     -webkit-backdrop-filter: blur(12px);
                     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
                     z-index: 999;
                   }
                   .sociallinks-bar-wrapper:hover {
-                    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+                    transform: translateY(-3px) scale(1.02);
+                    filter: brightness(1.05);
                   }
                   .sociallinks-bar-wrapper a {
                     transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, filter 0.25s ease;
