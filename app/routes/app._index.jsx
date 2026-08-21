@@ -39,8 +39,8 @@ export const action = async ({ request }) => {
   
   const selectedTemplate = formData.get("selectedTemplate") || "minimal";
   const position = formData.get("position") || "right";
-  const bgColor = formData.get("bgColor") || "#FFFFFF";
-  const iconColor = formData.get("iconColor") || "#000000";
+  const bgColor = formData.get("bgColor") !== null ? formData.get("bgColor") : "";
+  const iconColor = formData.get("iconColor") !== null ? formData.get("iconColor") : "";
   const iconSize = formData.get("iconSize") || "24px";
   
   const updates = {
