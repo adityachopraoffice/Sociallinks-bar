@@ -116,21 +116,21 @@ export default function SettingsPage() {
   const getTemplateStyles = (templateId) => {
     let base = {
       display: "flex",
-      gap: "10px",
+      gap: "12px",
       alignItems: "center",
       justifyContent: "center",
     };
     if (templateId === "minimal") {
-      return { ...base, background: "#FFFFFF", border: "1px solid #E0E0E0", color: "#000000", borderRadius: "4px", padding: "8px" };
+      return { ...base, background: "rgba(255, 255, 255, 0.9)", border: "1px solid rgba(224, 224, 224, 0.5)", color: "#333333", borderRadius: "12px", padding: "10px 14px" };
     }
     if (templateId === "bold") {
-      return { ...base, background: "#1A1A1A", border: "none", color: "#FF4444", borderRadius: "4px", padding: "8px" };
+      return { ...base, background: "rgba(26, 26, 26, 0.95)", border: "1px solid rgba(255, 255, 255, 0.1)", color: "#FF4444", borderRadius: "12px", padding: "12px 16px" };
     }
     if (templateId === "elegant") {
-      return { ...base, background: "#FDF6F0", border: "1px solid #E8D5C4", color: "#C49A6C", borderRadius: "20px", padding: "10px" };
+      return { ...base, background: "rgba(253, 246, 240, 0.95)", border: "1px solid rgba(232, 213, 196, 0.8)", color: "#A87B4F", borderRadius: "30px", padding: "10px 18px" };
     }
     if (templateId === "dark") {
-      return { ...base, background: "#0D0D0D", border: "1px solid #00FF88", color: "#00FF88", borderRadius: "6px", padding: "8px" };
+      return { ...base, background: "rgba(13, 13, 13, 0.9)", border: "1px solid rgba(0, 255, 136, 0.3)", color: "#00FF88", borderRadius: "16px", padding: "10px 14px" };
     }
     return base;
   };
@@ -266,8 +266,32 @@ export default function SettingsPage() {
             <Card>
               <BlockStack gap="400">
                 <Text variant="headingMd" as="h2">Live Preview</Text>
-                <Box padding="400" style={{ background: "#f4f6f8", position: "relative", minHeight: "200px", borderRadius: "8px" }}>
-                  <div style={{
+                
+                <style dangerouslySetInnerHTML={{__html: `
+                  .sociallinks-bar-wrapper {
+                    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+                    backdrop-filter: blur(12px);
+                    -webkit-backdrop-filter: blur(12px);
+                    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+                    z-index: 999;
+                  }
+                  .sociallinks-bar-wrapper:hover {
+                    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+                  }
+                  .sociallinks-bar-wrapper a {
+                    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, filter 0.25s ease;
+                    opacity: 0.85;
+                    display: flex;
+                  }
+                  .sociallinks-bar-wrapper a:hover {
+                    transform: scale(1.2) translateY(-2px);
+                    opacity: 1;
+                    filter: brightness(1.2);
+                  }
+                `}} />
+
+                <Box padding="400" style={{ background: "#f4f6f8", position: "relative", minHeight: "200px", borderRadius: "8px", overflow: "hidden" }}>
+                  <div className="sociallinks-bar-wrapper" style={{
                     ...currentPreviewStyles,
                     position: "absolute",
                     ...(formState.position === "left" ? { left: "20px", top: "50%", transform: "translateY(-50%)", flexDirection: "column" } : {}),
@@ -275,7 +299,7 @@ export default function SettingsPage() {
                     ...(formState.position === "bottom" ? { bottom: "20px", left: "50%", transform: "translateX(-50%)", flexDirection: "row" } : {}),
                   }}>
                     {PLATFORMS.filter(p => formState[`${p.id}Enabled`] && (!isFree || ["facebook", "instagram", "twitter"].includes(p.id))).map((p) => (
-                      <div key={p.id} style={{ width: formState.iconSize, height: formState.iconSize }} dangerouslySetInnerHTML={{ __html: ICONS[p.id] }} />
+                      <a href="#" key={p.id} style={{ color: currentPreviewStyles.color, width: formState.iconSize, height: formState.iconSize }} dangerouslySetInnerHTML={{ __html: ICONS[p.id] }} />
                     ))}
                   </div>
                 </Box>
