@@ -141,6 +141,9 @@ export default function SettingsPage() {
     if (templateId === "dark") {
       return { ...base, background: "#111111", border: "1px solid #00ffcc", color: "#00ffcc", borderRadius: "4px", padding: "10px 16px", boxShadow: "0 0 15px rgba(0, 255, 204, 0.3)" };
     }
+    if (templateId === "glass") {
+      return { ...base, background: "rgba(255, 255, 255, 0.25)", border: "1px solid rgba(255, 255, 255, 0.4)", color: "#1f1f1f", borderRadius: "24px", padding: "12px 18px", boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.15)" };
+    }
     return base;
   };
 
@@ -212,7 +215,7 @@ export default function SettingsPage() {
                   </Banner>
                 )}
                 <InlineStack gap="400" wrap={true}>
-                  {["minimal", "bold", "elegant", "dark"].map((template) => {
+                  {["minimal", "bold", "elegant", "dark", "glass"].map((template) => {
                     const locked = isFree && template !== "minimal";
                     return (
                       <Box 

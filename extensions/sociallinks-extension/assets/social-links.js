@@ -100,6 +100,13 @@ document.addEventListener("DOMContentLoaded", () => {
         borderRadius = "4px";
         padding = "10px 16px";
         boxShadow = "0 0 15px rgba(0, 255, 204, 0.3)";
+      } else if (template === "glass") {
+        background = "rgba(255, 255, 255, 0.25)";
+        border = "1px solid rgba(255, 255, 255, 0.4)";
+        color = "#1f1f1f";
+        borderRadius = "24px";
+        padding = "12px 18px";
+        boxShadow = "0 8px 32px 0 rgba(31, 38, 135, 0.15)";
       }
 
       if (settings.currentPlan === "pro") {
