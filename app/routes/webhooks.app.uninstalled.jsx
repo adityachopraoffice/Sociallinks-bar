@@ -12,5 +12,10 @@ export const action = async ({ request }) => {
     await db.session.deleteMany({ where: { shop } });
   }
 
+  await db.shopSettings.updateMany({
+    where: { shop },
+    data: { currentPlan: "free" }
+  });
+
   return new Response();
 };
