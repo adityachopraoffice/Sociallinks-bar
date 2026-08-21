@@ -98,74 +98,89 @@ export default function BillingPage() {
             <InlineGrid columns={{ xs: 1, sm: 3 }} gap="400">
               
               <Card>
-                <BlockStack gap="400" align="space-between" style={{ height: "100%" }}>
-                  <BlockStack gap="200">
-                    <Text variant="headingMd" as="h2">Free</Text>
-                    <Text variant="headingLg" as="p">$0/mo</Text>
-                    <Box paddingBlockStart="200">
-                      <ul>
-                        <li><Text as="p">3 social links only (FB, IG, TW)</Text></li>
-                        <li><Text as="p">Minimal template only</Text></li>
-                        <li><Text as="p">No custom colors</Text></li>
-                      </ul>
-                    </Box>
-                  </BlockStack>
-                  <Button 
-                    disabled={currentPlan === "free"} 
-                    onClick={() => handleUpgrade("free")}
-                    loading={isSubmitting && nav.formData?.get("plan") === "free"}
-                  >
-                    {currentPlan === "free" ? "Current Plan" : "Downgrade to Free"}
-                  </Button>
-                </BlockStack>
+                <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                  <div style={{ flexGrow: 1 }}>
+                    <BlockStack gap="200">
+                      <Text variant="headingMd" as="h2">Free</Text>
+                      <Text variant="headingLg" as="p">$0/mo</Text>
+                      <Box paddingBlockStart="200">
+                        <ul>
+                          <li><Text as="p">3 social links only (FB, IG, TW)</Text></li>
+                          <li><Text as="p">Minimal template only</Text></li>
+                          <li><Text as="p">No custom colors</Text></li>
+                        </ul>
+                      </Box>
+                    </BlockStack>
+                  </div>
+                  <div style={{ marginTop: "24px" }}>
+                    <Button 
+                      fullWidth
+                      disabled={currentPlan === "free"} 
+                      onClick={() => handleUpgrade("free")}
+                      loading={isSubmitting && nav.formData?.get("plan") === "free"}
+                    >
+                      {currentPlan === "free" ? "Current Plan" : "Downgrade to Free"}
+                    </Button>
+                  </div>
+                </div>
               </Card>
 
               <Card>
-                <BlockStack gap="400" align="space-between" style={{ height: "100%" }}>
-                  <BlockStack gap="200">
-                    <Text variant="headingMd" as="h2">Basic</Text>
-                    <Text variant="headingLg" as="p">$4.99/mo</Text>
-                    <Box paddingBlockStart="200">
-                      <ul>
-                        <li><Text as="p">All 8 social links</Text></li>
-                        <li><Text as="p">All 4 templates</Text></li>
-                        <li><Text as="p">No custom colors</Text></li>
-                      </ul>
-                    </Box>
-                  </BlockStack>
-                  <Button 
-                    primary={currentPlan !== "basic"} 
-                    disabled={currentPlan === "basic"}
-                    onClick={() => handleUpgrade("basic")}
-                    loading={isSubmitting && nav.formData?.get("plan") === "basic"}
-                  >
-                    {currentPlan === "basic" ? "Current Plan" : "Upgrade to Basic"}
-                  </Button>
-                </BlockStack>
+                <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                  <div style={{ flexGrow: 1 }}>
+                    <BlockStack gap="200">
+                      <Text variant="headingMd" as="h2">Basic</Text>
+                      <Text variant="headingLg" as="p">$4.99/mo</Text>
+                      <Box paddingBlockStart="200">
+                        <ul>
+                          <li><Text as="p">All 8 social links</Text></li>
+                          <li><Text as="p">All 4 templates (including Glass)</Text></li>
+                          <li><Text as="p">No custom colors</Text></li>
+                        </ul>
+                      </Box>
+                    </BlockStack>
+                  </div>
+                  <div style={{ marginTop: "24px" }}>
+                    <Button 
+                      fullWidth
+                      primary={currentPlan !== "basic"} 
+                      disabled={currentPlan === "basic"}
+                      onClick={() => handleUpgrade("basic")}
+                      loading={isSubmitting && nav.formData?.get("plan") === "basic"}
+                    >
+                      {currentPlan === "basic" ? "Current Plan" : "Upgrade to Basic"}
+                    </Button>
+                  </div>
+                </div>
               </Card>
 
               <Card>
-                <BlockStack gap="400" align="space-between" style={{ height: "100%" }}>
-                  <BlockStack gap="200">
-                    <Text variant="headingMd" as="h2">Pro</Text>
-                    <Text variant="headingLg" as="p">$9.99/mo</Text>
-                    <Box paddingBlockStart="200">
-                      <ul>
-                        <li><Text as="p">All 8 social links</Text></li>
-                        <li><Text as="p">All 4 templates</Text></li>
-                        <li><Text as="p">Full color customization</Text></li>
-                      </ul>
-                    </Box>
-                  </BlockStack>
-                  <Button 
-                    primary={currentPlan !== "pro"} 
-                    disabled={currentPlan === "pro"}
-                    onClick={() => handleUpgrade("pro")}
-                    loading={isSubmitting && nav.formData?.get("plan") === "pro"}
-                  >
-                    {currentPlan === "pro" ? "Current Plan" : "Upgrade to Pro"}
-                  </Button>
-                </BlockStack>
+                <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                  <div style={{ flexGrow: 1 }}>
+                    <BlockStack gap="200">
+                      <Text variant="headingMd" as="h2">Pro</Text>
+                      <Text variant="headingLg" as="p">$9.99/mo</Text>
+                      <Box paddingBlockStart="200">
+                        <ul>
+                          <li><Text as="p">All 8 social links</Text></li>
+                          <li><Text as="p">All 4 templates (including Glass)</Text></li>
+                          <li><Text as="p">Full color customization</Text></li>
+                        </ul>
+                      </Box>
+                    </BlockStack>
+                  </div>
+                  <div style={{ marginTop: "24px" }}>
+                    <Button 
+                      fullWidth
+                      primary={currentPlan !== "pro"} 
+                      disabled={currentPlan === "pro"}
+                      onClick={() => handleUpgrade("pro")}
+                      loading={isSubmitting && nav.formData?.get("plan") === "pro"}
+                    >
+                      {currentPlan === "pro" ? "Current Plan" : "Upgrade to Pro"}
+                    </Button>
+                  </div>
+                </div>
               </Card>
 
             </InlineGrid>
