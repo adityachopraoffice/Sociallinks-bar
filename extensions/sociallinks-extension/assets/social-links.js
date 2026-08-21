@@ -30,36 +30,72 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (enabledLinks.length === 0) return;
 
+      // Inject premium CSS
+      const styleId = "sociallinks-premium-styles";
+      if (!document.getElementById(styleId)) {
+        const style = document.createElement("style");
+        style.id = styleId;
+        style.innerHTML = `
+          .sociallinks-bar-wrapper {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999999;
+          }
+          .sociallinks-bar-wrapper:hover {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+          }
+          .sociallinks-bar-wrapper a {
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, filter 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.85;
+          }
+          .sociallinks-bar-wrapper a:hover {
+            transform: scale(1.2) translateY(-2px);
+            opacity: 1;
+            filter: brightness(1.2);
+          }
+        `;
+        document.head.appendChild(style);
+      }
+
       const bar = document.createElement("div");
+      bar.className = "sociallinks-bar-wrapper";
 
       // Template styles
       let template = settings.selectedTemplate || "minimal";
-      let baseStyles = "display: flex; gap: 10px; align-items: center; justify-content: center; z-index: 999999;";
+      let baseStyles = "gap: 12px;";
 
-      let background = "#FFFFFF";
-      let border = "1px solid #E0E0E0";
-      let color = "#000000";
-      let borderRadius = "4px";
-      let padding = "8px";
+      let background = "rgba(255, 255, 255, 0.9)";
+      let border = "1px solid rgba(224, 224, 224, 0.5)";
+      let color = "#333333";
+      let borderRadius = "12px";
+      let padding = "10px 14px";
 
       if (template === "bold") {
-        background = "#1A1A1A";
-        border = "none";
+        background = "rgba(26, 26, 26, 0.95)";
+        border = "1px solid rgba(255, 255, 255, 0.1)";
         color = "#FF4444";
-        borderRadius = "4px";
-        padding = "8px";
+        borderRadius = "12px";
+        padding = "12px 16px";
       } else if (template === "elegant") {
-        background = "#FDF6F0";
-        border = "1px solid #E8D5C4";
-        color = "#C49A6C";
-        borderRadius = "20px";
-        padding = "10px";
+        background = "rgba(253, 246, 240, 0.95)";
+        border = "1px solid rgba(232, 213, 196, 0.8)";
+        color = "#A87B4F";
+        borderRadius = "30px";
+        padding = "10px 18px";
       } else if (template === "dark") {
-        background = "#0D0D0D";
-        border = "1px solid #00FF88";
+        background = "rgba(13, 13, 13, 0.9)";
+        border = "1px solid rgba(0, 255, 136, 0.3)";
         color = "#00FF88";
-        borderRadius = "6px";
-        padding = "8px";
+        borderRadius = "16px";
+        padding = "10px 14px";
       }
 
       if (settings.currentPlan === "pro") {
@@ -70,11 +106,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Positioning
       let posStyles = "";
       if (settings.position === "left") {
-        posStyles = "position: fixed; left: 0; top: 50%; transform: translateY(-50%); flex-direction: column;";
+        posStyles = "position: fixed; left: 20px; top: 50%; transform: translateY(-50%); flex-direction: column;";
       } else if (settings.position === "right") {
-        posStyles = "position: fixed; right: 0; top: 50%; transform: translateY(-50%); flex-direction: column;";
+        posStyles = "position: fixed; right: 20px; top: 50%; transform: translateY(-50%); flex-direction: column;";
       } else {
-        posStyles = "position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); flex-direction: row;";
+        posStyles = "position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); flex-direction: row;";
       }
 
       bar.style.cssText = `${baseStyles} background: ${background}; border: ${border}; border-radius: ${borderRadius}; padding: ${padding}; ${posStyles}`;
