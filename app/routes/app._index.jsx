@@ -243,12 +243,7 @@ export default function SettingsPage() {
             <BlockStack gap="500">
               <Card>
                 <BlockStack gap="400">
-                  <InlineStack align="space-between" blockAlign="center">
-                    <Text variant="headingMd" as="h2">Appearance</Text>
-                    <Button primary onClick={handleSave} loading={nav.state === "submitting"}>
-                      Save Settings
-                    </Button>
-                  </InlineStack>
+                  <Text variant="headingMd" as="h2">Appearance</Text>
                   <Select
                     label="Position"
                     options={[
@@ -324,6 +319,19 @@ export default function SettingsPage() {
                       opacity: 1;
                       filter: brightness(1.2);
                     }
+                    .black-save-button button {
+                      background-color: #000000 !important;
+                      color: #ffffff !important;
+                      border-radius: 8px !important;
+                      border: none !important;
+                      box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+                      font-size: 16px !important;
+                      padding: 12px !important;
+                    }
+                    .black-save-button button:hover {
+                      background-color: #222222 !important;
+                      box-shadow: 0 6px 20px rgba(0,0,0,0.25) !important;
+                    }
                   `}} />
 
                   <Box padding="400" style={{ background: "#e1e3e5", position: "relative", minHeight: "340px", borderRadius: "12px", overflow: "hidden", backgroundImage: "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)", boxShadow: "inset 0 2px 10px rgba(0,0,0,0.05)" }}>
@@ -341,6 +349,12 @@ export default function SettingsPage() {
                   </Box>
                 </BlockStack>
               </Card>
+
+              <div className="black-save-button">
+                <Button primary size="large" fullWidth onClick={handleSave} loading={nav.state === "submitting"}>
+                  Save All Settings
+                </Button>
+              </div>
             </BlockStack>
           </div>
         </Layout.Section>
