@@ -2,22 +2,30 @@
 
 client_id = "9490dc0024fcdc9a18ddf517ba72391e"
 name = "Social Link"
-application_url = "https://shopify.dev/apps/default-app-home"
+application_url = "https://sociallinks-bar.vercel.app"
 embedded = true
 
 [build]
 automatically_update_urls_on_dev = true
-include_config_on_deploy = true
 
 [webhooks]
 api_version = "2026-10"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = ""
+scopes = "read_products"
 
 [auth]
-redirect_urls = [ "https://shopify.dev/apps/default-app-home/api/auth" ]
+redirect_urls = [
+  "https://sociallinks-bar.vercel.app/auth/callback",
+  "https://sociallinks-bar.vercel.app/auth/shopify/callback",
+  "https://sociallinks-bar.vercel.app/api/auth/callback"
+]
 
 [extensions.theme]
 handle = "sociallinks-extension"
+
+[app_proxy]
+url = "https://sociallinks-bar.vercel.app"
+subpath = "sociallinks-bar"
+prefix = "apps"
