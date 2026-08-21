@@ -102,7 +102,16 @@ export default function SettingsPage() {
   }, [actionData]);
 
   const handleChange = (value, id) => {
-    setFormState((prev) => ({ ...prev, [id]: value }));
+    if (id === "selectedTemplate") {
+      setFormState((prev) => ({ 
+        ...prev, 
+        [id]: value,
+        bgColor: "",
+        iconColor: ""
+      }));
+    } else {
+      setFormState((prev) => ({ ...prev, [id]: value }));
+    }
   };
 
   const handleSave = () => {
@@ -137,8 +146,8 @@ export default function SettingsPage() {
 
   const currentPreviewStyles = getTemplateStyles(formState.selectedTemplate);
   if (isPro) {
-    currentPreviewStyles.background = formState.bgColor;
-    currentPreviewStyles.color = formState.iconColor;
+    if (formState.bgColor) currentPreviewStyles.background = formState.bgColor;
+    if (formState.iconColor) currentPreviewStyles.color = formState.iconColor;
   }
 
   return (
@@ -239,20 +248,24 @@ export default function SettingsPage() {
                   </Banner>
                 )}
                 <TextField
-                  label="Background Color"
+                  label="Custom Background Color (Leave empty for template default)"
                   value={formState.bgColor}
                   onChange={(val) => handleChange(val, "bgColor")}
                   disabled={!isPro}
                   autoComplete="off"
-                  type="color"
+                  clearButton
+                  onClearButtonClick={() => handleChange("", "bgColor")}
+                  placeholder="e.g. #FF0000 or linear-gradient(...)"
                 />
                 <TextField
-                  label="Icon Color"
+                  label="Custom Icon Color (Leave empty for template default)"
                   value={formState.iconColor}
                   onChange={(val) => handleChange(val, "iconColor")}
                   disabled={!isPro}
                   autoComplete="off"
-                  type="color"
+                  clearButton
+                  onClearButtonClick={() => handleChange("", "iconColor")}
+                  placeholder="e.g. #FFFFFF"
                 />
                 <TextField
                   label="Icon Size (e.g. 24px)"

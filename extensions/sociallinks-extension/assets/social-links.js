@@ -103,8 +103,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (settings.currentPlan === "pro") {
-        background = settings.bgColor || background;
-        color = settings.iconColor || color;
+        if (settings.bgColor) background = settings.bgColor;
+        if (settings.iconColor) color = settings.iconColor;
       }
 
       // Positioning
