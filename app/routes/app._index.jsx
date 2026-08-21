@@ -241,6 +241,12 @@ export default function SettingsPage() {
         <Layout.Section variant="oneHalf">
           <div style={{ position: "sticky", top: "20px" }}>
             <BlockStack gap="500">
+              <div className="black-save-button">
+                <Button primary size="large" fullWidth onClick={handleSave} loading={nav.state === "submitting"}>
+                  Save All Settings
+                </Button>
+              </div>
+
               <Card>
                 <BlockStack gap="400">
                   <Text variant="headingMd" as="h2">Appearance</Text>
@@ -349,12 +355,6 @@ export default function SettingsPage() {
                   </Box>
                 </BlockStack>
               </Card>
-
-              <div className="black-save-button">
-                <Button primary size="large" fullWidth onClick={handleSave} loading={nav.state === "submitting"}>
-                  Save All Settings
-                </Button>
-              </div>
             </BlockStack>
           </div>
         </Layout.Section>
