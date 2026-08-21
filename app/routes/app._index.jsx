@@ -156,7 +156,8 @@ export default function SettingsPage() {
   return (
     <Page title="SocialLinks Bar Settings">
       <Layout>
-        <Layout.Section>
+        {/* LEFT COLUMN: Configuration */}
+        <Layout.Section variant="oneHalf">
           <BlockStack gap="500">
             <Card>
               <BlockStack gap="400">
@@ -166,79 +167,34 @@ export default function SettingsPage() {
                     Unlock all 8 social platforms by upgrading to the Basic plan.
                   </Banner>
                 )}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
                 {PLATFORMS.map((platform, idx) => {
                   const isLocked = isFree && idx >= 3;
                   if (isLocked) return null;
                   return (
                     <Box key={platform.id} paddingBlockEnd="200">
-                      <InlineStack align="start" blockAlign="center" gap="400">
-                        <Checkbox
-                          label={platform.label}
-                          checked={formState[`${platform.id}Enabled`]}
-                          onChange={(val) => handleChange(val, `${platform.id}Enabled`)}
-                        />
-                        <Box style={{ width: "24px", height: "24px" }} dangerouslySetInnerHTML={{ __html: ICONS[platform.id] }} />
-                        <Box style={{ flexGrow: 1 }}>
-                          <TextField
-                            labelHidden
-                            label={`${platform.label} URL`}
-                            value={formState[`${platform.id}Url`]}
-                            onChange={(val) => handleChange(val, `${platform.id}Url`)}
-                            autoComplete="off"
+                      <BlockStack gap="200">
+                        <InlineStack align="start" blockAlign="center" gap="200">
+                          <Checkbox
+                            label={platform.label}
+                            checked={formState[`${platform.id}Enabled`]}
+                            onChange={(val) => handleChange(val, `${platform.id}Enabled`)}
                           />
-                        </Box>
-                      </InlineStack>
+                          <Box style={{ width: "20px", height: "20px" }} dangerouslySetInnerHTML={{ __html: ICONS[platform.id] }} />
+                        </InlineStack>
+                        <TextField
+                          labelHidden
+                          label={`${platform.label} URL`}
+                          value={formState[`${platform.id}Url`]}
+                          onChange={(val) => handleChange(val, `${platform.id}Url`)}
+                          autoComplete="off"
+                          placeholder={`Enter ${platform.label} URL`}
+                        />
+                      </BlockStack>
                     </Box>
                   );
                 })}
-              </BlockStack>
-            </Card>
-
-            <Card>
-              <BlockStack gap="400">
-                <Text variant="headingMd" as="h2">Appearance</Text>
-                <Select
-                  label="Position"
-                  options={[
-                    { label: "Left", value: "left" },
-                    { label: "Right", value: "right" },
-                    { label: "Bottom Center", value: "bottom" },
-                  ]}
-                  value={formState.position}
-                  onChange={(val) => handleChange(val, "position")}
-                />
-                
-                <Text variant="headingSm" as="h3">Templates</Text>
-                {(isFree) && (
-                  <Banner title="Upgrade to Basic" status="info">
-                    Unlock Bold, Elegant, and Dark templates.
-                  </Banner>
-                )}
-                <InlineStack gap="400" wrap={true}>
-                  {["minimal", "bold", "elegant", "dark", "glass"].map((template) => {
-                    const locked = isFree && template !== "minimal";
-                    return (
-                      <Box 
-                        key={template}
-                        onClick={() => !locked && handleChange(template, "selectedTemplate")}
-                        padding="400"
-                        style={{
-                          cursor: locked ? "not-allowed" : "pointer",
-                          opacity: locked ? 0.5 : 1,
-                          border: formState.selectedTemplate === template ? "2px solid #005BD3" : "2px solid transparent",
-                          borderRadius: "8px"
-                        }}
-                      >
-                        <Text as="p" alignment="center" fontWeight="bold">{template.charAt(0).toUpperCase() + template.slice(1)}</Text>
-                        <Box style={{ marginTop: "10px", ...getTemplateStyles(template) }}>
-                          <Box style={{ width: "20px", height: "20px" }} dangerouslySetInnerHTML={{ __html: ICONS.facebook }} />
-                          <Box style={{ width: "20px", height: "20px" }} dangerouslySetInnerHTML={{ __html: ICONS.instagram }} />
-                        </Box>
-                        {locked && <Box paddingBlockStart="200"><Text as="span" tone="subdued">Locked</Text></Box>}
-                      </Box>
-                    );
-                  })}
-                </InlineStack>
+                </div>
               </BlockStack>
             </Card>
 
@@ -278,54 +234,115 @@ export default function SettingsPage() {
                 />
               </BlockStack>
             </Card>
-
-            <Card>
-              <BlockStack gap="400">
-                <Text variant="headingMd" as="h2">Live Preview</Text>
-                
-                <style dangerouslySetInnerHTML={{__html: `
-                  .sociallinks-bar-wrapper {
-                    backdrop-filter: blur(12px);
-                    -webkit-backdrop-filter: blur(12px);
-                    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-                    z-index: 999;
-                  }
-                  .sociallinks-bar-wrapper:hover {
-                    transform: translateY(-3px) scale(1.02);
-                    filter: brightness(1.05);
-                  }
-                  .sociallinks-bar-wrapper a {
-                    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, filter 0.25s ease;
-                    opacity: 0.85;
-                    display: flex;
-                  }
-                  .sociallinks-bar-wrapper a:hover {
-                    transform: scale(1.2) translateY(-2px);
-                    opacity: 1;
-                    filter: brightness(1.2);
-                  }
-                `}} />
-
-                <Box padding="400" style={{ background: "#f4f6f8", position: "relative", minHeight: "200px", borderRadius: "8px", overflow: "hidden" }}>
-                  <div className="sociallinks-bar-wrapper" style={{
-                    ...currentPreviewStyles,
-                    position: "absolute",
-                    ...(formState.position === "left" ? { left: "20px", top: "50%", transform: "translateY(-50%)", flexDirection: "column" } : {}),
-                    ...(formState.position === "right" ? { right: "20px", top: "50%", transform: "translateY(-50%)", flexDirection: "column" } : {}),
-                    ...(formState.position === "bottom" ? { bottom: "20px", left: "50%", transform: "translateX(-50%)", flexDirection: "row" } : {}),
-                  }}>
-                    {PLATFORMS.filter(p => formState[`${p.id}Enabled`] && (!isFree || ["facebook", "instagram", "twitter"].includes(p.id))).map((p) => (
-                      <a href="#" key={p.id} style={{ color: currentPreviewStyles.color, width: formState.iconSize, height: formState.iconSize }} dangerouslySetInnerHTML={{ __html: ICONS[p.id] }} />
-                    ))}
-                  </div>
-                </Box>
-              </BlockStack>
-            </Card>
-
-            <Button primary onClick={handleSave} loading={nav.state === "submitting"}>
-              Save Settings
-            </Button>
           </BlockStack>
+        </Layout.Section>
+
+        {/* RIGHT COLUMN: Appearance & Preview */}
+        <Layout.Section variant="oneHalf">
+          <div style={{ position: "sticky", top: "20px" }}>
+            <BlockStack gap="500">
+              <Card>
+                <BlockStack gap="400">
+                  <InlineStack align="space-between" blockAlign="center">
+                    <Text variant="headingMd" as="h2">Appearance</Text>
+                    <Button primary onClick={handleSave} loading={nav.state === "submitting"}>
+                      Save Settings
+                    </Button>
+                  </InlineStack>
+                  <Select
+                    label="Position"
+                    options={[
+                      { label: "Left", value: "left" },
+                      { label: "Right", value: "right" },
+                      { label: "Bottom Center", value: "bottom" },
+                    ]}
+                    value={formState.position}
+                    onChange={(val) => handleChange(val, "position")}
+                  />
+                  
+                  <Text variant="headingSm" as="h3">Templates</Text>
+                  {(isFree) && (
+                    <Banner title="Upgrade to Basic" status="info">
+                      Unlock Bold, Elegant, Dark, and Glass templates.
+                    </Banner>
+                  )}
+                  <InlineStack gap="400" wrap={true}>
+                    {["minimal", "bold", "elegant", "dark", "glass"].map((template) => {
+                      const locked = isFree && template !== "minimal";
+                      return (
+                        <Box 
+                          key={template}
+                          onClick={() => !locked && handleChange(template, "selectedTemplate")}
+                          padding="400"
+                          style={{
+                            cursor: locked ? "not-allowed" : "pointer",
+                            opacity: locked ? 0.5 : 1,
+                            border: formState.selectedTemplate === template ? "2px solid #005BD3" : "2px solid transparent",
+                            borderRadius: "12px",
+                            boxShadow: formState.selectedTemplate === template ? "0 4px 12px rgba(0, 91, 211, 0.15)" : "none",
+                            background: "#f4f6f8",
+                            flex: "1 1 120px",
+                            textAlign: "center",
+                            transition: "all 0.2s ease"
+                          }}
+                        >
+                          <Text as="p" alignment="center" fontWeight="bold">{template.charAt(0).toUpperCase() + template.slice(1)}</Text>
+                          <div style={{ marginTop: "12px", ...getTemplateStyles(template), width: "100%", boxSizing: "border-box" }}>
+                            <Box style={{ width: "20px", height: "20px" }} dangerouslySetInnerHTML={{ __html: ICONS.facebook }} />
+                            <Box style={{ width: "20px", height: "20px" }} dangerouslySetInnerHTML={{ __html: ICONS.instagram }} />
+                          </div>
+                          {locked && <Box paddingBlockStart="200"><Text as="span" tone="subdued">Locked</Text></Box>}
+                        </Box>
+                      );
+                    })}
+                  </InlineStack>
+                </BlockStack>
+              </Card>
+
+              <Card>
+                <BlockStack gap="400">
+                  <Text variant="headingMd" as="h2">Live Preview</Text>
+                  
+                  <style dangerouslySetInnerHTML={{__html: `
+                    .sociallinks-bar-wrapper {
+                      backdrop-filter: blur(12px);
+                      -webkit-backdrop-filter: blur(12px);
+                      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+                      z-index: 999;
+                    }
+                    .sociallinks-bar-wrapper:hover {
+                      transform: translateY(-3px) scale(1.02);
+                      filter: brightness(1.05);
+                    }
+                    .sociallinks-bar-wrapper a {
+                      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, filter 0.25s ease;
+                      opacity: 0.85;
+                      display: flex;
+                    }
+                    .sociallinks-bar-wrapper a:hover {
+                      transform: scale(1.2) translateY(-2px);
+                      opacity: 1;
+                      filter: brightness(1.2);
+                    }
+                  `}} />
+
+                  <Box padding="400" style={{ background: "#e1e3e5", position: "relative", minHeight: "340px", borderRadius: "12px", overflow: "hidden", backgroundImage: "linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%)", boxShadow: "inset 0 2px 10px rgba(0,0,0,0.05)" }}>
+                    <div className="sociallinks-bar-wrapper" style={{
+                      ...currentPreviewStyles,
+                      position: "absolute",
+                      ...(formState.position === "left" ? { left: "20px", top: "50%", transform: "translateY(-50%)", flexDirection: "column" } : {}),
+                      ...(formState.position === "right" ? { right: "20px", top: "50%", transform: "translateY(-50%)", flexDirection: "column" } : {}),
+                      ...(formState.position === "bottom" ? { bottom: "20px", left: "50%", transform: "translateX(-50%)", flexDirection: "row" } : {}),
+                    }}>
+                      {PLATFORMS.filter(p => formState[`${p.id}Enabled`] && (!isFree || ["facebook", "instagram", "twitter"].includes(p.id))).map((p) => (
+                        <a href="#" key={p.id} style={{ color: currentPreviewStyles.color, width: formState.iconSize, height: formState.iconSize }} dangerouslySetInnerHTML={{ __html: ICONS[p.id] }} />
+                      ))}
+                    </div>
+                  </Box>
+                </BlockStack>
+              </Card>
+            </BlockStack>
+          </div>
         </Layout.Section>
       </Layout>
     </Page>
